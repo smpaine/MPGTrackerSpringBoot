@@ -1,0 +1,46 @@
+@domain = http://localhost:8080/mpgtracker/api
+#@domain = https://nameniap.com/mpgtracker/api
+
+###
+# Test authenticating user
+# @name authorizationCall
+POST {{domain}}/authenticate
+Content-Type: application/json
+
+{
+    "userName":"aUser",
+    "password":"aPassword"
+}
+
+@authToken = {{authorizationCall.response.body.token}}
+
+
+###
+# Test getting vehicle by ID
+GET {{domain}}/vehicles/3
+Authorization: Bearer {{authToken}}
+
+###
+# Test getting vehicle by Name
+GET {{domain}}/vehicles/findVehicle/El%20Fordo
+Authorization: Bearer {{authToken}}
+
+###
+# Test getting all vehicles
+GET {{domain}}/vehicles
+Authorization: Bearer {{authToken}}
+
+###
+# Test getting all mileages
+GET {{domain}}/mileages
+Authorization: Bearer {{authToken}}
+
+###
+# Test getting mileage by ID
+GET {{domain}}/mileages/489
+Authorization: Bearer {{authToken}}
+
+###
+# Test getting mileage by Vehicle ID
+GET {{domain}}/mileages/vehicle/4
+Authorization: Bearer {{authToken}}
