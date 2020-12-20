@@ -44,3 +44,37 @@ Authorization: Bearer {{authToken}}
 # Test getting mileage by Vehicle ID
 GET {{domain}}/mileages/vehicle/4
 Authorization: Bearer {{authToken}}
+
+###
+# Test user service
+GET {{domain}}/users
+Authorization: Bearer {{authToken}}
+
+###
+# Test user password service
+POST {{domain}}/users
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "id": -1,
+    "userName": "aUser",
+    "password": "aPassword"
+}
+
+###
+# Test add user service
+PUT {{domain}}/users
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "userName": "aUser",
+    "password": "aPassword"
+}
+
+###
+# Test delete user service
+DELETE {{domain}}/users/4
+Authorization: Bearer {{authToken}}
+
