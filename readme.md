@@ -5,6 +5,9 @@ Utilizes MySQL for database storage using JNDI data source.
 
 Runs in Apache Tomcat (https://tomcat.apache.org/)
 
+## Building
+Generate WAR file in target folder: `./mvnw clean install`
+
 ### Acknowledgements
 Spring Boot (https://spring.io/projects/spring-boot)
 
