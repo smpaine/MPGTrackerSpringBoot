@@ -12,9 +12,11 @@ CREATE TABLE `users` (
   `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `userName` varchar(30) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `usertype` varchar(30) NOT NULL,
+  `lastLoginDt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
 
 CREATE TABLE `session` (
   `id` int(4) unsigned NOT NULL AUTO_INCREMENT,

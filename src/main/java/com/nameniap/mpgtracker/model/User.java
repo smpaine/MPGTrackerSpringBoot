@@ -1,5 +1,7 @@
 package com.nameniap.mpgtracker.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -9,9 +11,6 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 6229822343488826704L;
 
 	@Column(name = "username")
@@ -21,6 +20,13 @@ public class User extends BaseEntity {
     @Column(name = "password")
     @NotEmpty
     private String password;
+    
+    @Column(name = "usertype")
+    @NotEmpty
+    private String userType;
+    
+    @Column(name = "lastlogindt")
+    private Date lastLoginDt;
 
 	public String getUserName() {
 		return userName;
@@ -36,6 +42,22 @@ public class User extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Date getLastLoginDt() {
+		return lastLoginDt;
+	}
+
+	public void setLastLoginDt(Date lastLoginDt) {
+		this.lastLoginDt = lastLoginDt;
 	}
 
 }

@@ -8,8 +8,8 @@ POST {{domain}}/authenticate
 Content-Type: application/json
 
 {
-    "userName":"aUser",
-    "password":"aPassword"
+    "userName":"spaine",
+    "password":"electrontube"
 }
 
 @authToken = {{authorizationCall.response.body.token}}
@@ -69,12 +69,12 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-    "userName": "aUser",
+    "userName": "betty",
     "password": "aPassword"
 }
 
 ###
 # Test delete user service
-DELETE {{domain}}/users/4
+DELETE {{domain}}/users/7
 Authorization: Bearer {{authToken}}
 
