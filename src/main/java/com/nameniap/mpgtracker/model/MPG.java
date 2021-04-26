@@ -15,7 +15,7 @@ public class MPG {
 	
 	private double totalCost;
 	
-	private String timestamp;
+	private long timestamp;
 	
 	private String name;
 	
@@ -53,11 +53,11 @@ public class MPG {
 		this.gallons = gallons;
 	}
 
-	public String getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
