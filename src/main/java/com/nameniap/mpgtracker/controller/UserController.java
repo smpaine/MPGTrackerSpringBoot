@@ -92,5 +92,23 @@ public class UserController {
 			throw new ResourceException(HttpStatus.NOT_MODIFIED, "Error deleting user");
 		}
 	}
+	
+	@GetMapping("/api/users/{id}")
+	User lookupUserById(@PathVariable int id) {
+		if (id >= 0) {
+			logger.info(
+					"User service - received id to lookup: " + id);
+			
+			User aUser = this.users.findById(id);
+			
+			if (aUser != null) {
+				return aUser;
+			} else {
+				throw new ResourceException(HttpStatus.NOT_FOUND, "User not found");
+			}
+		} else {
+			throw new ResourceException(HttpStatus.NOT_FOUND, "User not found");
+		}
+	}
 
 }
