@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +22,6 @@ import com.nameniap.mpgtracker.model.JwtResponse;
 import com.nameniap.mpgtracker.model.User;
 import com.nameniap.mpgtracker.repository.UserRepository;
 
-@CrossOrigin()
 @RestController
 public class JwtAuthenticationController {
 	

@@ -8,9 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nameniap.mpgtracker.model.Mileage;
-import com.nameniap.mpgtracker.model.User;
 
-public interface MileageRepository extends Repository<User, Integer> {
+public interface MileageRepository extends Repository<Mileage, Integer> {
 
     @Query("SELECT t FROM Mileage t where t.id = :id")
     @Transactional(readOnly = true)
