@@ -42,7 +42,7 @@ public class JwtAuthenticationController {
 
 		authenticate(authenticationRequest.getUserName(), authenticationRequest.getPassword());
 
-		User user = userRepository.findUser(authenticationRequest.getUserName());
+		User user = userRepository.findByUserName(authenticationRequest.getUserName());
 		
 		if (user.getLastLoginDt() != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

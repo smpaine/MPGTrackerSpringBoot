@@ -22,7 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 
-		com.nameniap.mpgtracker.model.User userFromDb = userRepository.findUser(username);
+		com.nameniap.mpgtracker.model.User userFromDb = userRepository.findByUserName(username);
 		if (userFromDb != null) {
 			return new User(userFromDb.getUserName(), userFromDb.getPassword(), new ArrayList<>());
 		} else {

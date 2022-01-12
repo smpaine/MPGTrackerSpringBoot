@@ -5,6 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +34,7 @@ public class UserController {
 
 	@GetMapping("/api/users")
 	List<User> getAllVehicles() {
-		return this.users.findAll();
+		return this.users.findAll(Sort.by(new Order(Direction.ASC, "userName")));
 	}
 
 	@PostMapping("/api/users")

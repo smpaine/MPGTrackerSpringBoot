@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +25,7 @@ public class VehicleController {
     
     @GetMapping("/api/vehicles")
 	List<Vehicle> getAllVehicles() {
-    	return this.vehicles.findAll();
+    	return this.vehicles.findAll(Sort.by(new Order(Direction.ASC, "sortkey")));
 	}
     
     @GetMapping("/api/vehicles/{vehicleId}")
@@ -32,7 +35,7 @@ public class VehicleController {
 	
 	@GetMapping("/api/vehicles/findVehicle/{vehicleName}")
 	Vehicle getVehicle(@PathVariable String vehicleName) {
-		return this.vehicles.findVehicle(vehicleName);
+		return this.vehicles.findByNameOrderBySortkey(vehicleName);
 	}
 	
 	@PutMapping("/api/vehicles")

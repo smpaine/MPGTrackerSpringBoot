@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,7 +36,7 @@ public class MileageController {
 
 	@GetMapping("/api/mileages")
 	List<Mileage> getAllMileages() {
-		return this.mileages.findAll();
+		return this.mileages.findAll(Sort.by(new Order(Direction.ASC, "timestamp")));
 	}
 
 	@GetMapping("/api/mileages/{mileageId}")
@@ -43,7 +46,7 @@ public class MileageController {
 
 	@GetMapping("/api/mileages/vehicle/{vehicleId}")
 	List<MPG> getMileagesByVehicle(@PathVariable int vehicleId) {
-		List<Mileage> mileages = this.mileages.findByVehicleId(vehicleId);
+		List<Mileage> mileages = this.mileages.findByVidOrderByTimestamp(vehicleId);
 		List<MPG> mpgs = new ArrayList<MPG>();
 
 		Vehicle vehicle = this.vehicles.findById(vehicleId).get();
