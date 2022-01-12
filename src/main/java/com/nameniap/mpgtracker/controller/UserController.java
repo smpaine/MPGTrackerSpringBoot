@@ -31,7 +31,7 @@ public class UserController {
 
 	@GetMapping("/api/users")
 	List<User> getAllVehicles() {
-		return this.users.getAllUsers();
+		return this.users.findAll();
 	}
 
 	@PostMapping("/api/users")
@@ -39,7 +39,7 @@ public class UserController {
 		if (userToUpdate != null) {
 			logger.info("User service - recieved user: <" + userToUpdate.getId() + ", " + userToUpdate.getUserName()
 					+ ", " + userToUpdate.getPassword() + ">");
-			User userFromDb = this.users.findById(userToUpdate.getId());
+			User userFromDb = this.users.findById(userToUpdate.getId()).get();
 
 			if (userFromDb != null) {
 
@@ -78,7 +78,7 @@ public class UserController {
 			logger.info(
 					"User service - received id to delete: " + id);
 			
-			User userToDelete = this.users.findById(id);
+			User userToDelete = this.users.findById(id).get();
 			
 			if (userToDelete != null) {
 				this.users.delete(userToDelete);
@@ -97,7 +97,7 @@ public class UserController {
 			logger.info(
 					"User service - received id to lookup: " + id);
 			
-			User aUser = this.users.findById(id);
+			User aUser = this.users.findById(id).get();
 			
 			if (aUser != null) {
 				return aUser;

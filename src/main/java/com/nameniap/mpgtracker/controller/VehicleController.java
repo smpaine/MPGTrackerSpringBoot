@@ -1,6 +1,7 @@
 package com.nameniap.mpgtracker.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,11 @@ public class VehicleController {
     
     @GetMapping("/api/vehicles")
 	List<Vehicle> getAllVehicles() {
-    	return this.vehicles.getAllVehicles();
+    	return this.vehicles.findAll();
 	}
     
     @GetMapping("/api/vehicles/{vehicleId}")
-	Vehicle getUser(@PathVariable int vehicleId) {
+	Optional<Vehicle> getUser(@PathVariable int vehicleId) {
     	return this.vehicles.findById(vehicleId);
 	}
 	

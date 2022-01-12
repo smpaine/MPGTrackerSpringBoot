@@ -3,6 +3,7 @@ package com.nameniap.mpgtracker.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,11 @@ public class MileageController {
 
 	@GetMapping("/api/mileages")
 	List<Mileage> getAllMileages() {
-		return this.mileages.getAllMileages();
+		return this.mileages.findAll();
 	}
 
 	@GetMapping("/api/mileages/{mileageId}")
-	Mileage getMileage(@PathVariable int mileageId) {
+	Optional<Mileage> getMileage(@PathVariable int mileageId) {
 		return this.mileages.findById(mileageId);
 	}
 
@@ -45,7 +46,7 @@ public class MileageController {
 		List<Mileage> mileages = this.mileages.findByVehicleId(vehicleId);
 		List<MPG> mpgs = new ArrayList<MPG>();
 
-		Vehicle vehicle = this.vehicles.findById(vehicleId);
+		Vehicle vehicle = this.vehicles.findById(vehicleId).get();
 		
 		if (mileages.size() > 0) {
 			double mpg = 0.0;
