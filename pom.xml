@@ -24,6 +24,8 @@
 		<jacoco.version>0.8.2</jacoco.version>
 
 	</properties>
+	
+	<packaging>war</packaging>
 
 	<dependencies>
 		<!-- Spring and Spring Boot dependencies -->
@@ -138,7 +140,5 @@
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
 	</build>
-
-	<packaging>war</packaging>
 
 </project>
