@@ -33,7 +33,7 @@ public class UserController {
 	private WebSecurityConfig wsc;
 
 	@GetMapping("/api/users")
-	List<User> getAllVehicles() {
+	List<User> getAllUsers() {
 		return this.users.findAll(Sort.by(new Order(Direction.ASC, "userName")));
 	}
 
