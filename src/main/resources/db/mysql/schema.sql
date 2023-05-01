@@ -51,3 +51,16 @@ CREATE TABLE `mileages` (
   KEY `vid` (`vid`),
   CONSTRAINT `mileages_ibfk_1` FOREIGN KEY (`vid`) REFERENCES `vehicles` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8
+
+create or replace view yearlyStats as
+select vid,
+year(timestamp) as year,
+COALESCE(sum(gallons), 0) as gallons,
+COALESCE(sum(totalCost), 0) as totalCost,
+COALESCE(sum(totalCost)/sum(gallons), 0) as costPerGallon,
+COALESCE(sum(totalCost)/(max(mileage)-min(mileage)), 0) as costPerMile,
+COALESCE((max(mileage)-min(mileage))/sum(gallons), 0) as mpg,
+COALESCE(max(mileage)-min(mileage), 0) as miles
+from mileages
+group by vid, year(timestamp)
+order by vid, year(timestamp);

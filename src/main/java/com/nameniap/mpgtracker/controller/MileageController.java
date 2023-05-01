@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -18,12 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nameniap.mpgtracker.model.MPG;
 import com.nameniap.mpgtracker.model.Mileage;
 import com.nameniap.mpgtracker.model.Vehicle;
+import com.nameniap.mpgtracker.model.YearlyStats;
+import com.nameniap.mpgtracker.model.YearlyStatsId;
 import com.nameniap.mpgtracker.repository.MileageRepository;
 import com.nameniap.mpgtracker.repository.VehicleRepository;
+import com.nameniap.mpgtracker.repository.YearlyStatsRepository;
 import com.nameniap.mpgtracker.service.MileageService;
 
 @RestController
 public class MileageController {
+	
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private MileageRepository mileages;
@@ -33,6 +40,9 @@ public class MileageController {
 	
 	@Autowired
 	private MileageService mileageService;
+	
+	@Autowired
+	private YearlyStatsRepository yearlyStats;
 
 	@GetMapping("/api/mileages")
 	List<Mileage> getAllMileages() {
@@ -96,6 +106,42 @@ public class MileageController {
 		Mileage mileage = mileageService.convertMPGToMileage(mpgToSave);
 		mileages.save(mileage);
 		return mileageService.convertMileageToMPG(mileage);
+	}
+	
+	@GetMapping("/api/mileages/vehicle/stats")
+	List<YearlyStats> getAllStats() {
+		List<YearlyStats> stats = yearlyStats.findAll();
+		
+		/*
+		for (YearlyStats aStat : stats) {
+			//logger.info("stat.id: " + aStat.getYearlyStatsId().toString());
+			logger.info("stat.id: " + aStat.getId().toString());
+		}
+		*/
+		
+		return stats;
+	}
+	
+	@GetMapping("/api/mileages/vehicle/stats/{vehicleId}")
+	List<YearlyStats> getStatsByVehicle(@PathVariable int vehicleId) {
+		List<YearlyStats> stats = yearlyStats.findByVidOrderByYear(vehicleId);
+
+		/*
+		for (YearlyStats aStat : stats) {
+			logger.info("stat.id: " + aStat.getId().toString());
+		}
+		*/
+		
+		return stats;
+	}
+	
+	@GetMapping("/api/mileages/vehicle/stats/{vehicleId}/{year}")
+	YearlyStats getStatsByVehicleByYear(@PathVariable int vehicleId, @PathVariable int year) {
+		YearlyStatsId id = new YearlyStatsId(vehicleId, year);
+		logger.debug("id: " + id.toString());
+		YearlyStats stats = yearlyStats.getByYearlyStatsId(id);
+		
+		return stats;
 	}
 	
 }
