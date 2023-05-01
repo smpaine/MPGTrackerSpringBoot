@@ -124,7 +124,7 @@ public class MileageController {
 	
 	@GetMapping("/api/mileages/vehicle/stats/{vehicleId}")
 	List<YearlyStats> getStatsByVehicle(@PathVariable int vehicleId) {
-		List<YearlyStats> stats = yearlyStats.findByVidOrderByYear(vehicleId);
+		List<YearlyStats> stats = yearlyStats.findByVidOrderByYearDesc(vehicleId);
 
 		/*
 		for (YearlyStats aStat : stats) {
