@@ -136,10 +136,10 @@ public class MileageController {
 	}
 	
 	@GetMapping("/api/mileages/vehicle/stats/{vehicleId}/{year}")
-	YearlyStats getStatsByVehicleByYear(@PathVariable int vehicleId, @PathVariable int year) {
+	Optional<YearlyStats> getStatsByVehicleByYear(@PathVariable int vehicleId, @PathVariable int year) {
 		YearlyStatsId id = new YearlyStatsId(vehicleId, year);
 		logger.debug("id: " + id.toString());
-		YearlyStats stats = yearlyStats.getByYearlyStatsId(id);
+		Optional<YearlyStats> stats = yearlyStats.findByYearlyStatsId(id);
 		
 		return stats;
 	}

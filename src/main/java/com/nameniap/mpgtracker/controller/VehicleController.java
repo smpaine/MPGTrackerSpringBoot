@@ -1,5 +1,6 @@
 package com.nameniap.mpgtracker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,14 +41,23 @@ public class VehicleController {
 	
 	@PutMapping("/api/vehicles")
 	Vehicle addVehicle(@RequestBody Vehicle newVehicle) {
-		this.vehicles.save(newVehicle);
-		return newVehicle;
+		return this.vehicles.save(newVehicle);
 	}
 	
 	@PostMapping("/api/vehicles")
 	Vehicle updateVehicle(@RequestBody Vehicle vehicleToUpdate) {
-		this.vehicles.save(vehicleToUpdate);
-		return vehicleToUpdate;
+		return this.vehicles.save(vehicleToUpdate);
+	}
+	
+	@PostMapping("/api/vehicles/sortUpdate")
+	List<Vehicle> updateVehiclesSortOrder(@RequestBody List<Vehicle> vehiclesListToUpdate) {
+		List<Vehicle> returnList = new ArrayList<Vehicle>();
+		
+		for (Vehicle vehicleToUpdate : vehiclesListToUpdate) {
+			returnList.add(vehicles.save(vehicleToUpdate));
+		}
+	
+		return vehiclesListToUpdate;
 	}
 
 }
