@@ -53,14 +53,22 @@ CREATE TABLE `mileages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8
 
 create or replace view yearlyStats as
-select vid,
-year(timestamp) as year,
-COALESCE(sum(gallons), 0) as gallons,
-COALESCE(sum(totalCost), 0) as totalCost,
-COALESCE(sum(totalCost)/sum(gallons), 0) as costPerGallon,
-COALESCE(sum(totalCost)/(max(mileage)-min(mileage)), 0) as costPerMile,
-COALESCE((max(mileage)-min(mileage))/sum(gallons), 0) as mpg,
-COALESCE(max(mileage)-min(mileage), 0) as miles
-from mileages
-group by vid, year(timestamp)
-order by vid, year(timestamp);
+with priorYearMileages as (
+    select vid, year(timestamp) as year, max(mileage) as maxMileage
+    from mileages
+    group by vid, year(timestamp)
+)
+select m.vid,
+year(m.timestamp) as year,
+COALESCE(sum(m.gallons), 0) as gallons,
+COALESCE(sum(m.totalCost), 0) as totalCost,
+COALESCE(sum(m.totalCost)/sum(m.gallons), 0) as costPerGallon,
+COALESCE(sum(m.totalCost)/(max(m.mileage)-COALESCE(p.maxMileage, 0)), 0) as costPerMile,
+COALESCE((max(m.mileage)-COALESCE(p.maxMileage, 0))/sum(m.gallons), 0) as mpg,
+max(m.mileage)-COALESCE(p.maxMileage, 0) as miles
+from mileages m
+left outer join priorYearMileages p
+on m.vid = p.vid
+and year(m.timestamp)-1 = p.year
+group by m.vid, year(timestamp)
+order by m.vid, year(timestamp);
