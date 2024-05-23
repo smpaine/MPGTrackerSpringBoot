@@ -63,9 +63,10 @@ year(m.timestamp) as year,
 COALESCE(sum(m.gallons), 0) as gallons,
 COALESCE(sum(m.totalCost), 0) as totalCost,
 COALESCE(sum(m.totalCost)/sum(m.gallons), 0) as costPerGallon,
-COALESCE(sum(m.totalCost)/(max(m.mileage)-COALESCE(p.maxMileage, 0)), 0) as costPerMile,
-COALESCE((max(m.mileage)-COALESCE(p.maxMileage, 0))/sum(m.gallons), 0) as mpg,
-max(m.mileage)-COALESCE(p.maxMileage, 0) as miles
+COALESCE(sum(m.totalCost)/(max(m.mileage)-COALESCE(p.maxMileage, min(m.mileage))), 0) as costPerMile,
+COALESCE((max(m.mileage)-COALESCE(p.maxMileage, min(m.mileage)))/sum(m.gallons), 0) as mpg,
+max(m.mileage)-COALESCE(p.maxMileage, min(m.mileage)) as miles,
+coalesce(100/COALESCE((max(m.mileage)-COALESCE(p.maxMileage, min(m.mileage)))/sum(m.gallons), 0), 0) as g100m
 from mileages m
 left outer join priorYearMileages p
 on m.vid = p.vid

@@ -39,6 +39,9 @@ public class YearlyStats {
 	@Column(name = "miles")
 	private int miles;
 	
+	@Column(name = "g100m")
+	private double g100m;
+	
 	/*
 	public YearlyStatsId getYearlyStatsId() {
 		return yearlyStatsId;
@@ -122,6 +125,14 @@ public class YearlyStats {
 
 	public void setMiles(int miles) {
 		this.miles = miles;
+	}
+	
+	public double getG100m() {
+		return g100m;
+	}
+	
+	public void setG100m(double g100m) {
+		this.g100m = g100m;
 	}
 	
 }
