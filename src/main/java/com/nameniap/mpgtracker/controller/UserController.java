@@ -1,6 +1,7 @@
 package com.nameniap.mpgtracker.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,17 +43,17 @@ public class UserController {
 		if (userToUpdate != null) {
 			logger.info("User service - recieved user: <" + userToUpdate.getId() + ", " + userToUpdate.getUserName()
 					+ ", " + userToUpdate.getPassword() + ">");
-			User userFromDb = this.users.findById(userToUpdate.getId()).get();
+			Optional<User> userFromDb = this.users.findById(userToUpdate.getId());
 
-			if (userFromDb != null) {
+			if (userFromDb.isPresent()) {
 
 				String encryptedPassword = this.wsc.passwordEncoder().encode(userToUpdate.getPassword());
 				logger.info("Encrypted password: " + encryptedPassword);
-				userFromDb.setPassword(encryptedPassword);
-				this.users.save(userFromDb);
+				userFromDb.get().setPassword(encryptedPassword);
+				this.users.save(userFromDb.get());
 			}
 
-			return userFromDb;
+			return userFromDb.get();
 		} else {
 			throw new ResourceException(HttpStatus.NOT_MODIFIED, "Error updating user");
 		}
@@ -81,11 +82,11 @@ public class UserController {
 			logger.info(
 					"User service - received id to delete: " + id);
 			
-			User userToDelete = this.users.findById(id).get();
+			Optional<User> userToDelete = this.users.findById(id);
 			
-			if (userToDelete != null) {
-				this.users.delete(userToDelete);
-				return userToDelete;
+			if (userToDelete.isPresent()) {
+				this.users.delete(userToDelete.get());
+				return userToDelete.get();
 			} else {
 				throw new ResourceException(HttpStatus.NOT_MODIFIED, "Error deleting user");
 			}
@@ -100,10 +101,10 @@ public class UserController {
 			logger.info(
 					"User service - received id to lookup: " + id);
 			
-			User aUser = this.users.findById(id).get();
+			Optional<User> aUser = this.users.findById(id);
 			
-			if (aUser != null) {
-				return aUser;
+			if (aUser.isPresent()) {
+				return aUser.get();
 			} else {
 				throw new ResourceException(HttpStatus.NOT_FOUND, "User not found");
 			}

@@ -22,7 +22,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 # Test getting vehicle by Name
-GET {{domain}}/vehicles/findVehicle/El%20Fordo
+GET {{domain}}/vehicles/findVehicle/Big%20Blue
 Authorization: Bearer {{authToken}}
 
 ###

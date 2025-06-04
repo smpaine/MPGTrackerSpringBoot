@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nameniap.mpgtracker.exception.ResourceException;
 import com.nameniap.mpgtracker.model.MPG;
 import com.nameniap.mpgtracker.model.Mileage;
 import com.nameniap.mpgtracker.model.Vehicle;
@@ -106,6 +109,23 @@ public class MileageController {
 		Mileage mileage = mileageService.convertMPGToMileage(mpgToSave);
 		mileages.save(mileage);
 		return mileageService.convertMileageToMPG(mileage);
+	}
+	
+	@DeleteMapping("/api/mileages/{mileageId}")
+	Optional<Mileage> deleteMileage(@PathVariable int mileageId) {
+		if (mileageId >=0) {
+		
+			Optional<Mileage> toDelete = this.mileages.findById(mileageId);
+			if (toDelete.isPresent()) {
+				Mileage mileageToDelete = toDelete.get();
+				this.mileages.delete(mileageToDelete);
+				return toDelete;
+			} else {
+				throw new ResourceException(HttpStatus.NOT_MODIFIED, "Error deleting mileage");
+			}
+		} else {
+			throw new ResourceException(HttpStatus.NOT_MODIFIED, "Error deleting mileage");
+		}
 	}
 	
 	@GetMapping("/api/mileages/vehicle/stats")
