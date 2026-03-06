@@ -41,14 +41,12 @@ public class UserController {
 	@PostMapping("/api/users")
 	User updatePassword(@RequestBody User userToUpdate) {
 		if (userToUpdate != null) {
-			logger.info("User service - recieved user: <" + userToUpdate.getId() + ", " + userToUpdate.getUserName()
-					+ ", " + userToUpdate.getPassword() + ">");
+			logger.info("User service - recieved user: <" + userToUpdate.getId() + ", " + userToUpdate.getUserName() + ">");
 			Optional<User> userFromDb = this.users.findById(userToUpdate.getId());
 
 			if (userFromDb.isPresent()) {
 
 				String encryptedPassword = this.wsc.passwordEncoder().encode(userToUpdate.getPassword());
-				logger.info("Encrypted password: " + encryptedPassword);
 				userFromDb.get().setPassword(encryptedPassword);
 				this.users.save(userFromDb.get());
 			}
@@ -62,11 +60,9 @@ public class UserController {
 	@PutMapping("/api/users")
 	User addUser(@RequestBody User userToAdd) {
 		if (userToAdd != null) {
-			logger.info(
-					"User service - recieved user: <" + userToAdd.getUserName() + ", " + userToAdd.getPassword() + ">");
+			logger.info("User service - recieved user: <" + userToAdd.getUserName() + ">");
 
 			String encryptedPassword = this.wsc.passwordEncoder().encode(userToAdd.getPassword());
-			logger.info("Encrypted password: " + encryptedPassword);
 			userToAdd.setPassword(encryptedPassword);
 			this.users.save(userToAdd);
 
