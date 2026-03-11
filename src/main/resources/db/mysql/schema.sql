@@ -97,7 +97,7 @@ order by m.vid, year(timestamp);
    CREATE EVENT cleanup_passkey_challenges
   ON SCHEDULE EVERY 5 MINUTE
   DO
-    DELETE FROM passkey_challenges WHERE created_dt < NOW() - INTERVAL 5 MINUTE;
+    DO DELETE FROM passkey_challenges WHERE created_dt < UTC_TIMESTAMP() - INTERVAL 5 MINUTE;
     
 ALTER TABLE passkey_credentials
     ADD COLUMN origin VARCHAR(255) NULL,
