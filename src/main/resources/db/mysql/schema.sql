@@ -73,3 +73,32 @@ on m.vid = p.vid
 and year(m.timestamp)-1 = p.year
 group by m.vid, year(timestamp)
 order by m.vid, year(timestamp);
+
+  CREATE TABLE `passkey_credentials` (
+    `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` int(4) unsigned NOT NULL,
+    `credential_id` varchar(512) NOT NULL,
+    `public_key_cose` blob NOT NULL,
+    `sign_count` bigint NOT NULL DEFAULT 0,
+    `created_dt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `credential_id` (`credential_id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `passkey_credentials_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  CREATE TABLE `passkey_challenges` (
+    `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
+    `request_json` longtext NOT NULL,
+    `created_dt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
+   CREATE EVENT cleanup_passkey_challenges
+  ON SCHEDULE EVERY 5 MINUTE
+  DO
+    DELETE FROM passkey_challenges WHERE created_dt < NOW() - INTERVAL 5 MINUTE;
+    
+ALTER TABLE passkey_credentials
+    ADD COLUMN origin VARCHAR(255) NULL,
+    ADD COLUMN user_agent VARCHAR(500) NULL;
