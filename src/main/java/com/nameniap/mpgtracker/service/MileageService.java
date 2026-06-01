@@ -22,6 +22,7 @@ public class MileageService {
 		mpg.setTotalCost(mileage.getTotalCost());
 		mpg.setTimestamp(mileage.getTimestamp().getTime());
 		mpg.setVid(mileage.getVid());
+		mpg.setNotes(mileage.getNotes());
 		return mpg;
 	}
 	
@@ -40,6 +41,7 @@ public class MileageService {
 		}
 		mileage.setTimestamp(timeStamp);
 		mileage.setVid(mpg.getVid());
+		mileage.setNotes(mpg.getNotes());
 		return mileage;
 	}
 

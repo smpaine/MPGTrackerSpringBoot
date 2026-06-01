@@ -102,3 +102,6 @@ order by m.vid, year(timestamp);
 ALTER TABLE passkey_credentials
     ADD COLUMN origin VARCHAR(255) NULL,
     ADD COLUMN user_agent VARCHAR(500) NULL;
+
+ALTER TABLE mileages ADD COLUMN notes VARCHAR(1000) NULL;
+

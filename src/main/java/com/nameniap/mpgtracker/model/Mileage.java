@@ -34,6 +34,9 @@ public class Mileage extends BaseEntity {
 	@Column(name = "vid")
 	private int vid;
 
+	@Column(name = "notes", length = 1000)
+	private String notes;
+
 	public int getMileage() {
 		return mileage;
 	}
@@ -73,5 +76,13 @@ public class Mileage extends BaseEntity {
 	public void setVid(int vid) {
 		this.vid = vid;
 	}
-	
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
 }

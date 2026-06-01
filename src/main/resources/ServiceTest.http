@@ -1,5 +1,6 @@
 @domain = http://localhost:8080/mpgtracker/api
 #@domain = https://nameniap.com/mpgtracker/api
+@domain = http://localhost:4200/api
 
 ###
 # Test authenticating user
@@ -14,6 +15,10 @@ Content-Type: application/json
 
 @authToken = {{authorizationCall.response.body.token}}
 
+###
+# Test getting all vehicles
+GET {{domain}}/vehicles
+Authorization: Bearer {{authToken}}
 
 ###
 # Test getting vehicle by ID

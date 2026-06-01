@@ -28,7 +28,9 @@ public class MPG {
 	private double mpg;
 	
 	private int miles;
-	
+
+	private String notes;
+
 	public int getId() {
 		return id;
 	}
@@ -120,5 +122,13 @@ public class MPG {
 	public void setMiles(int miles) {
 		this.miles = miles;
 	}
-	
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
 }
